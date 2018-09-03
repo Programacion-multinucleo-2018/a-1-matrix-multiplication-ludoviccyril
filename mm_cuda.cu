@@ -135,7 +135,7 @@ int main(int argc, char *argv[]) {
 
   cout << "multiply <<<(" << grid.x << ", " << grid.y << "), (" << block.x
        << ", " << block.y << ")>>> elapsed " << duration_ms.count()
-       << "ms, with a total run time of " << duration_ms_prog.count() << endl;
+       << "ms, with a total run time of " << duration_ms_prog.count() << "ms." << endl;
 
   // reset device
   SAFE_CALL(cudaDeviceReset(), "Error reseting");
