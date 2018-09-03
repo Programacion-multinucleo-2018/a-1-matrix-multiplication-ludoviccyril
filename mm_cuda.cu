@@ -52,6 +52,8 @@ __global__ void multiply(int *a, int *b, int *c, int n) {
 }
 
 int main(int argc, char *argv[]) {
+  auto start_prog = chrono::high_resolution_clock::now();
+
   int n = 5;
 
   if (argc > 1) {
@@ -103,11 +105,6 @@ int main(int argc, char *argv[]) {
   SAFE_CALL(cudaDeviceSynchronize(), "Error executing kernel");
   auto end_cpu = chrono::high_resolution_clock::now();
 
-  chrono::duration<float, std::milli> duration_ms = end_cpu - start_cpu;
-
-  cout << "multiply <<<(" << grid.x << ", " << grid.y << "), (" << block.x
-       << ", " << block.y << ")>>> elapsed " << duration_ms.count() << "ms\n";
-
   // SAFE_CALL kernel error
   SAFE_CALL(cudaGetLastError(), "Error with last error");
 
@@ -130,6 +127,15 @@ int main(int argc, char *argv[]) {
   free(b);
   free(c);
   free(d);
+
+  auto end_prog = chrono::high_resolution_clock::now();
+
+  chrono::duration<float, std::milli> duration_ms = end_cpu - start_cpu;
+  chrono::duration<float, std::milli> duration_ms_prog = end_cpu - start_cpu;
+
+  cout << "multiply <<<(" << grid.x << ", " << grid.y << "), (" << block.x
+       << ", " << block.y << ")>>> elapsed " << duration_ms.count()
+       << "ms\n, with a total run time of " << duration_ms_prog.count() << endl;
 
   // reset device
   SAFE_CALL(cudaDeviceReset(), "Error reseting");
