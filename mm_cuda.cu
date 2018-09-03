@@ -131,11 +131,11 @@ int main(int argc, char *argv[]) {
   auto end_prog = chrono::high_resolution_clock::now();
 
   chrono::duration<float, std::milli> duration_ms = end_cpu - start_cpu;
-  chrono::duration<float, std::milli> duration_ms_prog = end_cpu - start_cpu;
+  chrono::duration<float, std::milli> duration_ms_prog = end_prog - start_prog;
 
   cout << "multiply <<<(" << grid.x << ", " << grid.y << "), (" << block.x
        << ", " << block.y << ")>>> elapsed " << duration_ms.count()
-       << "ms\n, with a total run time of " << duration_ms_prog.count() << endl;
+       << "ms, with a total run time of " << duration_ms_prog.count() << endl;
 
   // reset device
   SAFE_CALL(cudaDeviceReset(), "Error reseting");
